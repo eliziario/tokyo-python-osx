@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Hash Database — HDB &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="up" title="tokyo.cabinet — Python Tokyo Cabinet interface." href="cabinet.html" />
+    <link rel="next" title="On-memory Hash Database — MDB" href="MDB.html" />
+    <link rel="prev" title="tokyo.cabinet — Python Tokyo Cabinet interface." href="cabinet.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="MDB.html" title="On-memory Hash Database — MDB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cabinet.html" title="tokyo.cabinet — Python Tokyo Cabinet interface."
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="cabinet.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="hash-database-hdb">
+<span id="hdb"></span><h1>Hash Database &#8212; <a title="tokyo.cabinet.HDB" class="reference internal" href="#tokyo.cabinet.HDB"><tt class="xref docutils literal"><span class="pre">HDB</span></tt></a><a class="headerlink" href="#hash-database-hdb" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a title="tokyo.cabinet.HDB" class="reference internal" href="#tokyo.cabinet.HDB"><tt class="xref docutils literal"><span class="pre">HDB</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tokyo.cabinet.HDB">
+<em class="property">class </em><tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDB</tt><a class="headerlink" href="#tokyo.cabinet.HDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">tokyo.cabinet</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">hdb</span> <span class="o">=</span> <span class="n">HDB</span><span class="p">()</span>
+
+<span class="c"># if need be, you should call tune/setcache/setxmsiz/setdfunit before</span>
+<span class="c"># open, ex. with default values:</span>
+<span class="n">hdb</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">hdb</span><span class="o">.</span><span class="n">setcache</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">hdb</span><span class="o">.</span><span class="n">setxmsiz</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">hdb</span><span class="o">.</span><span class="n">setdfunit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c"># open the database</span>
+<span class="n">hdb</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;casket.tch&quot;</span><span class="p">,</span> <span class="n">HDBOWRITER</span> <span class="o">|</span> <span class="n">HDBOCREAT</span><span class="p">)</span>
+
+<span class="c"># store records</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;hop&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;step&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;baz&quot;</span><span class="p">,</span> <span class="s">&quot;jump&quot;</span><span class="p">)]:</span>
+    <span class="n">hdb</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="c"># retrieve one record</span>
+<span class="k">print</span><span class="p">(</span><span class="n">hdb</span><span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">])</span>
+
+<span class="c"># traverse records</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">hdb</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">hdb</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+<span class="c"># close the database</span>
+<span class="n">hdb</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For all methods taking either a <em>key</em> argument or a pair <em>(key, value)</em>,
+<em>key</em> and <em>value</em> must be either <tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2) or
+<tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3).</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://fallabs.com/tokyocabinet/spex-en.html#tchdbapi">The Hash Database API</a></p>
+</div>
+<dl class="describe">
+<dt>
+<tt class="descname">len(hdb)</tt></dt>
+<dd>Return the number of records in the database <em>hdb</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">hdb[key]</tt></dt>
+<dd>Return the value of <em>hdb</em>&#8216;s record corresponding to <em>key</em>. Raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">hdb[key] = value</tt></dt>
+<dd>Set <tt class="docutils literal"><span class="pre">hdb[key]</span></tt> to <em>value</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">del hdb[key]</tt></dt>
+<dd>Remove <tt class="docutils literal"><span class="pre">hdb[key]</span></tt> from <em>hdb</em>.  Raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not
+in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key in hdb</tt></dt>
+<dd>Return <tt class="xref docutils literal"><span class="pre">True</span></tt> if <em>hdb</em> has a key <em>key</em>, else <tt class="xref docutils literal"><span class="pre">False</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key not in hdb</tt></dt>
+<dd>Equivalent to <tt class="docutils literal"><span class="pre">not</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">hdb</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">iter(hdb)</tt></dt>
+<dd>Return an iterator over the keys of the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.tune">
+<tt class="descname">tune</tt><big>(</big><em>bnum</em>, <em>apow</em>, <em>fpow</em>, <em>opts</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.tune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tune a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>bnum</em> &#8211; the number of elements in a bucket array. If specified as
+0 or as a negative value, the default value (131071) is used.</li>
+<li><em>apow</em> &#8211; (power of 2) TODO. If specified as a negative value, the
+default value (4) is used (means: 2**4).</li>
+<li><em>fpow</em> &#8211; (power of 2) TODO. If specified as a negative value, the
+default value (10) is used (means 2**10).</li>
+<li><em>opts</em> &#8211; options, see <a class="reference internal" href="#hdb-tune-optimize-options"><em>HDB.tune()/HDB.optimize() options</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Tuning an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.setcache">
+<tt class="descname">setcache</tt><big>(</big><em>rcnum</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.setcache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cache size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>rcnum</em> &#8211; the maximum number of records to be cached. If specified
+as 0 or as a negative value, caching is disabled (default).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Setting the cache size on an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.setxmsiz">
+<tt class="descname">setxmsiz</tt><big>(</big><em>xmsiz</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.setxmsiz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the extra mapped memory size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>xmsiz</em> &#8211; the amount of extra mapped memory (in what unit?). If
+specified as 0 or as a negative value, the extra mapped memory is
+disabled. Default is 67108864 (unit?).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Setting the extra memory size on an open database is an invalid
+operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.setdfunit">
+<tt class="descname">setdfunit</tt><big>(</big><em>dfunit</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.setdfunit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set auto defragmentation&#8217;s unit step number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>dfunit</em> &#8211; the unit step number(?). If specified as 0 or as a
+negative value, auto defragmentation is disabled (default).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Setting this on an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.open">
+<tt class="descname">open</tt><big>(</big><em>path</em>, <em>mode</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>path</em> &#8211; path to the database file.</li>
+<li><em>mode</em> &#8211; mode, see <a class="reference internal" href="#hdb-open-modes"><em>HDB.open() modes</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the database.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">HDBs are closed when garbage-collected.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Remove all records from the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.copy">
+<tt class="descname">copy</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the database file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>path</em> &#8211; path to the destination file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.begin">
+<tt class="descname">begin</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.begin" title="Permalink to this definition">¶</a></dt>
+<dd>Begin a transaction.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.commit">
+<tt class="descname">commit</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.commit" title="Permalink to this definition">¶</a></dt>
+<dd>Commit a transaction.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.abort">
+<tt class="descname">abort</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.abort" title="Permalink to this definition">¶</a></dt>
+<dd>Abort a transaction.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value corresponding to <em>key</em>. Equivalent to <tt class="docutils literal"><span class="pre">hdb[key]</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.2.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.remove">
+<tt class="descname">remove</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a record from the database. Equivalent to <tt class="docutils literal"><span class="pre">del</span> <span class="pre">hdb[key]</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.2.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.put">
+<tt class="descname">put</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.put" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database. Equivalent to <tt class="docutils literal"><span class="pre">hdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.putkeep">
+<tt class="descname">putkeep</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.putkeep" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database, unlike the standard forms
+(<tt class="docutils literal"><span class="pre">hdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt> or <a title="tokyo.cabinet.HDB.put" class="reference internal" href="#tokyo.cabinet.HDB.put"><tt class="xref docutils literal"><span class="pre">put()</span></tt></a>), this method raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is already in the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.putcat">
+<tt class="descname">putcat</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.putcat" title="Permalink to this definition">¶</a></dt>
+<dd>Concatenate a value at the end of an existing one. If there is no
+corresponding record, a new record is stored.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.putasync">
+<tt class="descname">putasync</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.putasync" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database in an asynchronous fashion. Records
+passed to this method are accumulated into an inner buffer and written
+to the file when synced.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.addint">
+<tt class="descname">addint</tt><big>(</big><em>key</em>, <em>num</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.addint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store an <tt class="xref docutils literal"><span class="pre">int</span></tt> in the database. If <em>key</em> is not in the database,
+this method stores <em>num</em> in the database and returns it. If <em>key</em> is
+already in the database, then it will add <em>num</em> to its current value and
+return the result. If <em>key</em> exists but its value cannot be treated as an
+<tt class="xref docutils literal"><span class="pre">int</span></tt> this method raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last">
+<li><p class="first">The returned value will wrap around <a title="tokyo.cabinet.INT_MAX" class="reference external" href="cabinet.html#tokyo.cabinet.INT_MAX"><tt class="xref docutils literal"><span class="pre">INT_MAX</span></tt></a> and
+<a title="tokyo.cabinet.INT_MIN" class="reference external" href="cabinet.html#tokyo.cabinet.INT_MIN"><tt class="xref docutils literal"><span class="pre">INT_MIN</span></tt></a>. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hdb</span><span class="o">.</span><span class="n">addint</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">)</span> <span class="c"># setting &#39;id&#39; to INT_MAX</span>
+<span class="go">2147483647</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hdb</span><span class="o">.</span><span class="n">addint</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># adding 1 to &#39;id&#39; returns INT_MIN</span>
+<span class="go">-2147483648</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Trying to access a value set with <a title="tokyo.cabinet.HDB.addint" class="reference internal" href="#tokyo.cabinet.HDB.addint"><tt class="xref docutils literal"><span class="pre">addint()</span></tt></a> using <a title="tokyo.cabinet.HDB.get" class="reference internal" href="#tokyo.cabinet.HDB.get"><tt class="xref docutils literal"><span class="pre">get()</span></tt></a>
+or <tt class="docutils literal"><span class="pre">hdb[key]</span></tt> will <strong>not</strong> return an <tt class="xref docutils literal"><span class="pre">int</span></tt>. It will
+instead return the internal binary representation of the value.
+Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hdb</span><span class="o">.</span><span class="n">addint</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">)</span> <span class="c"># setting &#39;id&#39; to INT_MAX</span>
+<span class="go">2147483647</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hdb</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
+<span class="go">&#39;\xff\xff\xff\x7f&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>
+<span class="versionmodified">New in version 0.5.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.adddouble">
+<tt class="descname">adddouble</tt><big>(</big><em>key</em>, <em>num</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.adddouble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store a <tt class="xref docutils literal"><span class="pre">float</span></tt> in the database. If <em>key</em> is not in the database,
+this method stores <em>num</em> in the database and returns it. If <em>key</em> is
+already in the database, then it will add <em>num</em> to its current value and
+return the result. If <em>key</em> exists but its value cannot be treated as a
+<tt class="xref docutils literal"><span class="pre">float</span></tt> this method raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Trying to access a value set with <a title="tokyo.cabinet.HDB.adddouble" class="reference internal" href="#tokyo.cabinet.HDB.adddouble"><tt class="xref docutils literal"><span class="pre">adddouble()</span></tt></a> using
+<a title="tokyo.cabinet.HDB.get" class="reference internal" href="#tokyo.cabinet.HDB.get"><tt class="xref docutils literal"><span class="pre">get()</span></tt></a> or <tt class="docutils literal"><span class="pre">hdb[key]</span></tt> will <strong>not</strong> return a <tt class="xref docutils literal"><span class="pre">float</span></tt>.</p>
+</div>
+<p>
+<span class="versionmodified">New in version 0.5.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.sync">
+<tt class="descname">sync</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.sync" title="Permalink to this definition">¶</a></dt>
+<dd>Flush modifications to the database file.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s keys.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s values.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s items (<tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs).</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.searchkeys">
+<tt class="descname">searchkeys</tt><big>(</big><em>prefix</em><span class="optional">[</span>, <em>max</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.searchkeys" title="Permalink to this definition">¶</a></dt>
+<dd>Return a frozenset of keys starting with <em>prefix</em>. If given, <em>max</em> is
+the maximum number of keys to fetch, if omitted or specified as a
+negative value no limit is applied.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.HDB.optimize">
+<tt class="descname">optimize</tt><big>(</big><span class="optional">[</span><em>bnum=0</em><span class="optional">[</span>, <em>apow=-1</em><span class="optional">[</span>, <em>fpow=-1</em><span class="optional">[</span>, <em>opts=255</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.cabinet.HDB.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>bnum</em> &#8211; the number of elements in a bucket array. If specified as 0
+or as a negative value, the default value (twice the number of
+records) is used.</li>
+<li><em>apow</em> &#8211; (power of 2) TODO. If specified as a negative value, the
+current setting is kept.</li>
+<li><em>fpow</em> &#8211; (power of 2) TODO. If specified as a negative value, the
+current setting is kept.</li>
+<li><em>opts</em> &#8211; options, see <a class="reference internal" href="#hdb-tune-optimize-options"><em>HDB.tune()/HDB.optimize() options</em></a>. If
+specified as 255 (<tt class="xref docutils literal"><span class="pre">UINT8_MAX</span></tt>), the current setting is kept.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Optimizing a read only database, or during a transaction, is an
+invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.cabinet.HDB.path">
+<tt class="descname">path</tt><a class="headerlink" href="#tokyo.cabinet.HDB.path" title="Permalink to this definition">¶</a></dt>
+<dd>The path to the database file.</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.cabinet.HDB.size">
+<tt class="descname">size</tt><a class="headerlink" href="#tokyo.cabinet.HDB.size" title="Permalink to this definition">¶</a></dt>
+<dd>The size in bytes of the database file.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="hdb-open-modes">
+<span id="id2"></span><h2><a title="tokyo.cabinet.HDB.open" class="reference internal" href="#tokyo.cabinet.HDB.open"><tt class="xref docutils literal"><span class="pre">HDB.open()</span></tt></a> modes<a class="headerlink" href="#hdb-open-modes" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="tokyo.cabinet.HDBOREADER">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBOREADER</tt><a class="headerlink" href="#tokyo.cabinet.HDBOREADER" title="Permalink to this definition">¶</a></dt>
+<dd>Open a database in read-only mode.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.HDBOWRITER">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBOWRITER</tt><a class="headerlink" href="#tokyo.cabinet.HDBOWRITER" title="Permalink to this definition">¶</a></dt>
+<dd>Open a database in read-write mode.</dd></dl>
+
+<p>The following constants can only be combined with <a title="tokyo.cabinet.HDBOWRITER" class="reference internal" href="#tokyo.cabinet.HDBOWRITER"><tt class="xref docutils literal"><span class="pre">HDBOWRITER</span></tt></a> :</p>
+<ul>
+<li><dl class="data">
+<dt id="tokyo.cabinet.HDBOCREAT">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBOCREAT</tt><a class="headerlink" href="#tokyo.cabinet.HDBOCREAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new database file if it does not exists.</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.cabinet.HDBOTRUNC">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBOTRUNC</tt><a class="headerlink" href="#tokyo.cabinet.HDBOTRUNC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new database file even if one already exists (truncates existing
+file).</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.cabinet.HDBOTSYNC">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBOTSYNC</tt><a class="headerlink" href="#tokyo.cabinet.HDBOTSYNC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sync the database file on every transaction.</p>
+</dd></dl>
+
+</li>
+</ul>
+<p>The following constants can be combined with either <a title="tokyo.cabinet.HDBOREADER" class="reference internal" href="#tokyo.cabinet.HDBOREADER"><tt class="xref docutils literal"><span class="pre">HDBOREADER</span></tt></a> or
+<a title="tokyo.cabinet.HDBOWRITER" class="reference internal" href="#tokyo.cabinet.HDBOWRITER"><tt class="xref docutils literal"><span class="pre">HDBOWRITER</span></tt></a> :</p>
+<ul>
+<li><dl class="data">
+<dt id="tokyo.cabinet.HDBONOLCK">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBONOLCK</tt><a class="headerlink" href="#tokyo.cabinet.HDBONOLCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the database file without file locking.</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.cabinet.HDBOLCKNB">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBOLCKNB</tt><a class="headerlink" href="#tokyo.cabinet.HDBOLCKNB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locking is performed without blocking.</p>
+</dd></dl>
+
+</li>
+</ul>
+</div>
+<div class="section" id="hdb-tune-hdb-optimize-options">
+<span id="hdb-tune-optimize-options"></span><h2><a title="tokyo.cabinet.HDB.tune" class="reference internal" href="#tokyo.cabinet.HDB.tune"><tt class="xref docutils literal"><span class="pre">HDB.tune()</span></tt></a>/<a title="tokyo.cabinet.HDB.optimize" class="reference internal" href="#tokyo.cabinet.HDB.optimize"><tt class="xref docutils literal"><span class="pre">HDB.optimize()</span></tt></a> options<a class="headerlink" href="#hdb-tune-hdb-optimize-options" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="tokyo.cabinet.HDBTLARGE">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBTLARGE</tt><a class="headerlink" href="#tokyo.cabinet.HDBTLARGE" title="Permalink to this definition">¶</a></dt>
+<dd>The size of the database can be larger than 2GB.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.HDBTDEFLATE">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBTDEFLATE</tt><a class="headerlink" href="#tokyo.cabinet.HDBTDEFLATE" title="Permalink to this definition">¶</a></dt>
+<dd>Each record is compressed with Deflate encoding.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.HDBTBZIP">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBTBZIP</tt><a class="headerlink" href="#tokyo.cabinet.HDBTBZIP" title="Permalink to this definition">¶</a></dt>
+<dd>Each record is compressed with BZIP2 encoding.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.HDBTTCBS">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">HDBTTCBS</tt><a class="headerlink" href="#tokyo.cabinet.HDBTTCBS" title="Permalink to this definition">¶</a></dt>
+<dd>Each record is compressed with TCBS encoding.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Hash Database &#8212; <tt class="docutils literal"><span class="pre">HDB</span></tt></a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">HDB</span></tt></a></li>
+<li><a class="reference external" href="#hdb-open-modes"><tt class="docutils literal"><span class="pre">HDB.open()</span></tt> modes</a></li>
+<li><a class="reference external" href="#hdb-tune-hdb-optimize-options"><tt class="docutils literal"><span class="pre">HDB.tune()</span></tt>/<tt class="docutils literal"><span class="pre">HDB.optimize()</span></tt> options</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="cabinet.html"
+                                  title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="MDB.html"
+                                  title="next chapter">On-memory Hash Database &#8212; <tt class="docutils literal docutils literal"><span class="pre">MDB</span></tt></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/HDB.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="MDB.html" title="On-memory Hash Database — MDB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cabinet.html" title="tokyo.cabinet — Python Tokyo Cabinet interface."
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="cabinet.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

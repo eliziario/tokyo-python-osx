@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>On-memory Hash Database — MDB &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="up" title="tokyo.cabinet — Python Tokyo Cabinet interface." href="cabinet.html" />
+    <link rel="next" title="B+ Tree Database — BDB" href="BDB.html" />
+    <link rel="prev" title="Hash Database — HDB" href="HDB.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="BDB.html" title="B+ Tree Database — BDB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="HDB.html" title="Hash Database — HDB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="cabinet.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="on-memory-hash-database-mdb">
+<span id="mdb"></span><h1>On-memory Hash Database &#8212; <a title="tokyo.cabinet.MDB" class="reference internal" href="#tokyo.cabinet.MDB"><tt class="xref docutils literal"><span class="pre">MDB</span></tt></a><a class="headerlink" href="#on-memory-hash-database-mdb" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<p>
+<span class="versionmodified">New in version 0.1.2.</span></p>
+</blockquote>
+<div class="section" id="id1">
+<h2><a title="tokyo.cabinet.MDB" class="reference internal" href="#tokyo.cabinet.MDB"><tt class="xref docutils literal"><span class="pre">MDB</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tokyo.cabinet.MDB">
+<em class="property">class </em><tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">MDB</tt><big>(</big><span class="optional">[</span><em>bnum</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>bnum</em> &#8211; the number of elements in a bucket array. If omitted or
+specified as 0, the default value (65536) is used.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">tokyo.cabinet</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">mdb</span> <span class="o">=</span> <span class="n">MDB</span><span class="p">()</span>
+
+<span class="c"># store records</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;hop&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;step&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;baz&quot;</span><span class="p">,</span> <span class="s">&quot;jump&quot;</span><span class="p">)]:</span>
+    <span class="n">mdb</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="c"># retrieve one record</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mdb</span><span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">])</span>
+
+<span class="c"># traverse records</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mdb</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">mdb</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For all methods taking either a <em>key</em> argument or a pair <em>(key, value)</em>,
+<em>key</em> and <em>value</em> must be either <tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2) or
+<tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3).</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://fallabs.com/tokyocabinet/spex-en.html#tcutilapi_mdbapi">API of On-memory Hash Database</a></p>
+</div>
+<dl class="describe">
+<dt>
+<tt class="descname">len(mdb)</tt></dt>
+<dd>Return the number of records in the database <em>mdb</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">mdb[key]</tt></dt>
+<dd>Return the value of <em>mdb</em>&#8216;s record corresponding to <em>key</em>. Raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">mdb[key] = value</tt></dt>
+<dd>Set <tt class="docutils literal"><span class="pre">mdb[key]</span></tt> to <em>value</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">del mdb[key]</tt></dt>
+<dd>Remove <tt class="docutils literal"><span class="pre">mdb[key]</span></tt> from <em>mdb</em>.  Raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not
+in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key in mdb</tt></dt>
+<dd>Return <tt class="xref docutils literal"><span class="pre">True</span></tt> if <em>mdb</em> has a key <em>key</em>, else <tt class="xref docutils literal"><span class="pre">False</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key not in mdb</tt></dt>
+<dd>Equivalent to <tt class="docutils literal"><span class="pre">not</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">mdb</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">iter(mdb)</tt></dt>
+<dd>Return an iterator over the keys of the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Remove all records from the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value corresponding to <em>key</em>. Equivalent to <tt class="docutils literal"><span class="pre">mdb[key]</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.2.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.remove">
+<tt class="descname">remove</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a record from the database. Equivalent to <tt class="docutils literal"><span class="pre">del</span> <span class="pre">mdb[key]</span></tt>.</p>
+<p>
+<span class="versionmodified">New in version 0.2.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.put">
+<tt class="descname">put</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.put" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database. Equivalent to <tt class="docutils literal"><span class="pre">mdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.putkeep">
+<tt class="descname">putkeep</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.putkeep" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database, unlike the standard forms
+(<tt class="docutils literal"><span class="pre">mdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt> or <a title="tokyo.cabinet.MDB.put" class="reference internal" href="#tokyo.cabinet.MDB.put"><tt class="xref docutils literal"><span class="pre">put()</span></tt></a>), this method raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is already in the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.putcat">
+<tt class="descname">putcat</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.putcat" title="Permalink to this definition">¶</a></dt>
+<dd>Concatenate a value at the end of an existing one. If there is no
+corresponding record, a new record is stored.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s keys.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s values.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s items (<tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs).</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.MDB.searchkeys">
+<tt class="descname">searchkeys</tt><big>(</big><em>prefix</em><span class="optional">[</span>, <em>max</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.cabinet.MDB.searchkeys" title="Permalink to this definition">¶</a></dt>
+<dd>Return a frozenset of keys starting with <em>prefix</em>. If given, <em>max</em> is
+the maximum number of keys to fetch, if omitted or specified as a
+negative value no limit is applied.</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.cabinet.MDB.size">
+<tt class="descname">size</tt><a class="headerlink" href="#tokyo.cabinet.MDB.size" title="Permalink to this definition">¶</a></dt>
+<dd>The size in bytes of the database.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">On-memory Hash Database &#8212; <tt class="docutils literal"><span class="pre">MDB</span></tt></a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">MDB</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="HDB.html"
+                                  title="previous chapter">Hash Database &#8212; <tt class="docutils literal docutils literal"><span class="pre">HDB</span></tt></a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="BDB.html"
+                                  title="next chapter">B+ Tree Database &#8212; <tt class="docutils literal docutils literal"><span class="pre">BDB</span></tt></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/MDB.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BDB.html" title="B+ Tree Database — BDB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="HDB.html" title="Hash Database — HDB"
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="cabinet.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

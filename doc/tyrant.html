@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tokyo.tyrant — Python Tokyo Tyrant interface. &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="next" title="Remote Database — RDB" href="RDB.html" />
+    <link rel="prev" title="tokyo.dbm — dbm compatible interface to tokyo.cabinet." href="dbm.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="RDB.html" title="Remote Database — RDB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dbm.html" title="tokyo.dbm — dbm compatible interface to tokyo.cabinet."
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-tokyo.tyrant">
+<span id="tokyo-tyrant"></span><h1><tt class="xref docutils literal"><span class="pre">tokyo.tyrant</span></tt> &#8212; Python Tokyo Tyrant interface.<a class="headerlink" href="#module-tokyo.tyrant" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<p>
+<span class="versionmodified">New in version 0.6.0.</span></p>
+</blockquote>
+<p><em>Platforms: </em>POSIX</p>
+<p>Tokyo Tyrant is a package of network interface to the DBM called Tokyo Cabinet.
+Though the DBM has high performance, you might bother in case that multiple
+processes share the same database, or remote processes access the database.
+Thus, Tokyo Tyrant is provided for concurrent and remote connections to Tokyo
+Cabinet.</p>
+<div class="admonition-todo admonition " id="todo-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Rewrite the previous section (copy/pasted from <a class="reference external" href="http://fallabs.com/tokyotyrant/">http://fallabs.com/tokyotyrant/</a>).</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://fallabs.com/tokyotyrant/spex.html">Fundamental Specifications of Tokyo Tyrant Version 1</a> for more information about
+Tokyo Tyrant.</p>
+</div>
+<dl class="exception">
+<dt id="tokyo.tyrant.Error">
+<em class="property">exception </em><tt class="descclassname">tokyo.tyrant.</tt><tt class="descname">Error</tt><a class="headerlink" href="#tokyo.tyrant.Error" title="Permalink to this definition">¶</a></dt>
+<dd>Raised when an error specific to Tokyo Tyrant happens.</dd></dl>
+
+<dl class="function">
+<dt id="tokyo.tyrant.version">
+<tt class="descclassname">tokyo.tyrant.</tt><tt class="descname">version</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.version" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the version string of the underlying Tokyo Tyrant library.</dd></dl>
+
+<ul>
+<li class="toctree-l1"><a class="reference external" href="RDB.html">Remote Database &#8212; <tt class="docutils literal"><span class="pre">RDB</span></tt></a></li>
+<li class="toctree-l1"><a class="reference external" href="RTDB.html">Remote Table Database &#8212; <tt class="docutils literal"><span class="pre">RTDB</span></tt></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="dbm.html"
+                                  title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">tokyo.dbm</span></tt> &#8212; <tt class="docutils literal docutils literal docutils literal"><span class="pre">dbm</span></tt> compatible interface to <tt class="docutils literal docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt>.</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="RDB.html"
+                                  title="next chapter">Remote Database &#8212; <tt class="docutils literal docutils literal docutils literal"><span class="pre">RDB</span></tt></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tyrant.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="RDB.html" title="Remote Database — RDB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dbm.html" title="tokyo.dbm — dbm compatible interface to tokyo.cabinet."
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

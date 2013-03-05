@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changes &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="prev" title="Tagged Database — JDB" href="JDB.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="JDB.html" title="Tagged Database — JDB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="todo">
+<span id="changes"></span><h1>Todo<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>more/better tests</li>
+<li>refactor iterators</li>
+<li>see if we can turn queries into iterators - <a class="reference external" href="http://code.google.com/p/tokyo-python/issues/detail?id=1">Issue 1</a></li>
+<li>Determine if it&#8217;s worth releasing the GIL around some of tokyo cabinet&#8217;s api
+call (conversation with Devin Wang)</li>
+<li>Q-gram Database (QDB) ?</li>
+<li>Word Database (WDB) ?</li>
+<li>Array List (List)?</li>
+<li>Hash Map (Map)?</li>
+<li>Ordered Tree (Tree)?</li>
+</ul>
+</div>
+<div class="section" id="release-0-7-0">
+<h1>Release 0.7.0<a class="headerlink" href="#release-0-7-0" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>added tokyo.dystopia module</li>
+<li>added Indexed Database (IDB)</li>
+<li>added Tagged Database (JDB)</li>
+</ul>
+</div>
+<div class="section" id="release-0-6-2">
+<h1>Release 0.6.2<a class="headerlink" href="#release-0-6-2" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>fixed setup.py (did not install c extensions)</li>
+</ul>
+</div>
+<div class="section" id="release-0-6-1">
+<h1>Release 0.6.1<a class="headerlink" href="#release-0-6-1" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>changed attribute RTDBQuery.count to method RTDBQuery.count()</li>
+<li>added method TDBQuery.count() - <a class="reference external" href="http://code.google.com/p/tokyo-python/issues/detail?id=2">Issue 2</a> fixed</li>
+<li>added iter[keys/values/items] methods to HDB, MDB, BDB, NDB, FDB and TDB</li>
+<li>added itervalues[keys/vals] methods to TDB</li>
+<li>fixed a bug in all addint/adddouble methods (always marked the db as changed) - I&#8217;ll get it right eventually :-)</li>
+<li>added iter[keys/values/items] methods to RDB and RTDB</li>
+<li>added itervalues[keys/vals] methods to RTDB</li>
+<li>allow null bytes in keys and values - <a class="reference external" href="http://code.google.com/p/tokyo-python/issues/detail?id=3">Issue 3</a> fixed</li>
+<li>added libraries version checking in setup.py</li>
+<li>fixed BDB.range() documentation</li>
+<li>added basic TDBQuery/RTDBQuery tests</li>
+<li>added basic tokyo.dbm tests</li>
+</ul>
+</div>
+<div class="section" id="release-0-6-0">
+<h1>Release 0.6.0<a class="headerlink" href="#release-0-6-0" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>reorganized the package to accommodate the new tokyo.tyrant module:<ul>
+<li>main package is called tokyo</li>
+<li>replaced tokyocabinet with tokyo.cabinet</li>
+<li>replaced tcdbm with tokyo.dbm</li>
+</ul>
+</li>
+<li>added tokyo.tyrant module</li>
+<li>added Remote Database (RDB)</li>
+<li>updated tests to work with Python 2 and 3 (mainly string/bytes conversions)</li>
+<li>fixed a bug in tcmap_to_dict</li>
+<li>fixed a bug in all addint/adddouble methods (did not mark the db as changed)</li>
+<li>added method setcmpfunc to BDB</li>
+<li>removed OSError (which should have been IOError anyway) from all open() and
+copy() methods, due to BDB.setcmpfunc()</li>
+<li>added Remote Table Database (RTDB)</li>
+<li>changed method TDBQuery.hint() to attribute TDBQuery.hint</li>
+</ul>
+</div>
+<div class="section" id="release-0-5-0">
+<h1>Release 0.5.0<a class="headerlink" href="#release-0-5-0" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>reorganized the sources a bit (-&gt; smaller binary?)</li>
+<li>added method addint to HDB, BDB and FDB</li>
+<li>added constants INT_MAX, INT_MIN</li>
+<li>added method adddouble to HDB, BDB and FDB</li>
+<li>added module tcdbm (with help from Aigars Mahinovs)</li>
+</ul>
+</div>
+<div class="section" id="release-0-4-0">
+<h1>Release 0.4.0<a class="headerlink" href="#release-0-4-0" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>added Table Database (TDB)</li>
+<li>better guard (at least I think) against change during iteration</li>
+</ul>
+</div>
+<div class="section" id="release-0-3-0">
+<h1>Release 0.3.0<a class="headerlink" href="#release-0-3-0" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>added Fixed-length Database (FDB)</li>
+<li>all iterators raise an Error if size changed during iteration</li>
+</ul>
+</div>
+<div class="section" id="release-0-2-1">
+<h1>Release 0.2.1<a class="headerlink" href="#release-0-2-1" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>added On-memory Tree Database (NDB)</li>
+</ul>
+</div>
+<div class="section" id="release-0-2-0">
+<h1>Release 0.2.0<a class="headerlink" href="#release-0-2-0" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>added B+ Tree Database (BDB)</li>
+<li>added methods get and remove to HDB and MDB</li>
+</ul>
+</div>
+<div class="section" id="release-0-1-2">
+<h1>Release 0.1.2<a class="headerlink" href="#release-0-1-2" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>added On-memory Hash Database (MDB)</li>
+</ul>
+</div>
+<div class="section" id="release-0-1-0">
+<h1>Release 0.1.0<a class="headerlink" href="#release-0-1-0" title="Permalink to this headline">¶</a></h1>
+<p>First public release:</p>
+<ul class="simple">
+<li>only Hash Database (HDB)</li>
+<li>restricted to string/bytes</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Todo</a></li>
+<li><a class="reference external" href="#release-0-7-0">Release 0.7.0</a></li>
+<li><a class="reference external" href="#release-0-6-2">Release 0.6.2</a></li>
+<li><a class="reference external" href="#release-0-6-1">Release 0.6.1</a></li>
+<li><a class="reference external" href="#release-0-6-0">Release 0.6.0</a></li>
+<li><a class="reference external" href="#release-0-5-0">Release 0.5.0</a></li>
+<li><a class="reference external" href="#release-0-4-0">Release 0.4.0</a></li>
+<li><a class="reference external" href="#release-0-3-0">Release 0.3.0</a></li>
+<li><a class="reference external" href="#release-0-2-1">Release 0.2.1</a></li>
+<li><a class="reference external" href="#release-0-2-0">Release 0.2.0</a></li>
+<li><a class="reference external" href="#release-0-1-2">Release 0.1.2</a></li>
+<li><a class="reference external" href="#release-0-1-0">Release 0.1.0</a></li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="JDB.html"
+                                  title="previous chapter">Tagged Database &#8212; <tt class="docutils literal docutils literal docutils literal"><span class="pre">JDB</span></tt></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/changes.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="JDB.html" title="Tagged Database — JDB"
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

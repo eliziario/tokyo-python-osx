@@ -1,0 +1,575 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tagged Database — JDB &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="up" title="tokyo.dystopia — Python Tokyo Dystopia interface." href="dystopia.html" />
+    <link rel="next" title="Todo" href="changes.html" />
+    <link rel="prev" title="Indexed Database — IDB" href="IDB.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="changes.html" title="Todo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IDB.html" title="Indexed Database — IDB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="dystopia.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal"><span class="pre">tokyo.dystopia</span></tt> &#8212; Python Tokyo Dystopia interface.</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tagged-database-jdb">
+<span id="jdb"></span><h1>Tagged Database &#8212; <a title="tokyo.dystopia.JDB" class="reference internal" href="#tokyo.dystopia.JDB"><tt class="xref docutils literal"><span class="pre">JDB</span></tt></a><a class="headerlink" href="#tagged-database-jdb" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a title="tokyo.dystopia.JDB" class="reference internal" href="#tokyo.dystopia.JDB"><tt class="xref docutils literal"><span class="pre">JDB</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tokyo.dystopia.JDB">
+<em class="property">class </em><tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDB</tt><a class="headerlink" href="#tokyo.dystopia.JDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">tokyo.dystopia</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">jdb</span> <span class="o">=</span> <span class="n">JDB</span><span class="p">()</span>
+
+<span class="c"># if need be, you should call tune/setcache before open,</span>
+<span class="c"># ex. with default values:</span>
+<span class="n">jdb</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">jdb</span><span class="o">.</span><span class="n">setcache</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c"># open the database</span>
+<span class="n">jdb</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;casket.tdj&quot;</span><span class="p">,</span> <span class="n">JDBOWRITER</span> <span class="o">|</span> <span class="n">JDBOCREAT</span><span class="p">)</span>
+
+<span class="c"># store records</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;hop&quot;</span><span class="p">,</span> <span class="s">&quot;step&quot;</span><span class="p">,</span> <span class="s">&quot;jump&quot;</span><span class="p">)),</span>
+                   <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;quick&quot;</span><span class="p">,</span> <span class="s">&quot;brown&quot;</span><span class="p">,</span> <span class="s">&quot;fox&quot;</span><span class="p">)),</span>
+                   <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;lazy&quot;</span><span class="p">,</span> <span class="s">&quot;dog&quot;</span><span class="p">))]:</span>
+    <span class="n">jdb</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="c"># retrieve one record</span>
+<span class="k">print</span><span class="p">(</span><span class="n">jdb</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c"># traverse records</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">jdb</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">jdb</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+<span class="c"># close the database</span>
+<span class="n">jdb</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For all methods taking either a <em>key</em> argument or a pair <em>(key, value)</em>:</p>
+<ul class="simple">
+<li>Python2: <em>key</em> must be <tt class="xref docutils literal"><span class="pre">long</span></tt>/<tt class="xref docutils literal"><span class="pre">int</span></tt> and <em>value</em> must be
+a sequence of <tt class="xref docutils literal"><span class="pre">str</span></tt> or <tt class="xref docutils literal"><span class="pre">unicode</span></tt>.</li>
+<li>Python3: <em>key</em> must be <tt class="xref docutils literal"><span class="pre">int</span></tt> and <em>value</em> must be a sequence of
+<tt class="xref docutils literal"><span class="pre">bytes</span></tt> or <tt class="xref docutils literal"><span class="pre">str</span></tt>.</li>
+</ul>
+<p>Values will always be returned as a tuple of UTF-8 encoded unicode objects.</p>
+<p class="last">On top of that <em>key</em> <strong>must always be &gt; 0</strong>.</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://fallabs.com/tokyodystopia/spex.html#laputaapi">Tokyo Dystopia Simple API</a></p>
+</div>
+<dl class="describe">
+<dt>
+<tt class="descname">len(jdb)</tt></dt>
+<dd>Return the number of records in the database <em>jdb</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">jdb[key]</tt></dt>
+<dd>Return the value of <em>jdb</em>&#8216;s record corresponding to <em>key</em>. Raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">jdb[key] = value</tt></dt>
+<dd>Set <tt class="docutils literal"><span class="pre">jdb[key]</span></tt> to <em>value</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">del jdb[key]</tt></dt>
+<dd>Remove <tt class="docutils literal"><span class="pre">jdb[key]</span></tt> from <em>jdb</em>.  Raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not
+in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key in jdb</tt></dt>
+<dd>Return <tt class="xref docutils literal"><span class="pre">True</span></tt> if <em>jdb</em> has a key <em>key</em>, else <tt class="xref docutils literal"><span class="pre">False</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key not in jdb</tt></dt>
+<dd>Equivalent to <tt class="docutils literal"><span class="pre">not</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">jdb</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">iter(jdb)</tt></dt>
+<dd>Return an iterator over the keys of the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.tune">
+<tt class="descname">tune</tt><big>(</big><em>ernum</em>, <em>etnum</em>, <em>iusiz</em>, <em>opts</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.tune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tune a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>ernum</em> &#8211; the expected number of records to be stored. If specified
+as 0 or as a negative value, the default value (1000000) is used.</li>
+<li><em>etnum</em> &#8211; the expected number of tokens to be stored. If specified
+as 0 or as a negative value, the default value (1000000) is used.</li>
+<li><em>iusiz</em> &#8211; the unit size of each index file(?). If specified as 0 or
+as a negative value, the default value (536870912) is used.</li>
+<li><em>opts</em> &#8211; options, see <a class="reference internal" href="#jdb-tune-options"><em>JDB.tune() options</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Tuning an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.setcache">
+<tt class="descname">setcache</tt><big>(</big><em>icsiz</em>, <em>lcnum</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.setcache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cache size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>icsiz</em> &#8211; the size of the token cache. If specified as 0 or as a
+negative value, the default value (134217728) is used.</li>
+<li><em>lcnum</em> &#8211; the maximum number of cached leaf nodes. If specified as 0
+or as a negative value, the default value (64 for writer or 1024 for
+reader) is used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Setting the cache size on an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.setfwmmax">
+<tt class="descname">setfwmmax</tt><big>(</big><em>fwmmax</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.setfwmmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the maximum number of forward matching expansion(?).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>fwmmax</em> &#8211; the maximum number of forward matching expansion.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Setting this on an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.open">
+<tt class="descname">open</tt><big>(</big><em>path</em>, <em>mode</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>path</em> &#8211; path to the database directory.</li>
+<li><em>mode</em> &#8211; mode, see <a class="reference internal" href="#jdb-open-modes"><em>JDB.open() modes</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the database.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">JDBs are closed when garbage-collected.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Remove all records from the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.copy">
+<tt class="descname">copy</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the database directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>path</em> &#8211; path to the destination directory.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.get" title="Permalink to this definition">¶</a></dt>
+<dd>Return the value corresponding to <em>key</em>. Equivalent to <tt class="docutils literal"><span class="pre">jdb[key]</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.remove">
+<tt class="descname">remove</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.remove" title="Permalink to this definition">¶</a></dt>
+<dd>Delete a record from the database. Equivalent to <tt class="docutils literal"><span class="pre">del</span> <span class="pre">jdb[key]</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.put">
+<tt class="descname">put</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.put" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database. Equivalent to <tt class="docutils literal"><span class="pre">jdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.sync">
+<tt class="descname">sync</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.sync" title="Permalink to this definition">¶</a></dt>
+<dd>Flush modifications to the database file.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd>Return an iterator over the database&#8217;s keys.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd>Return an iterator over the database&#8217;s values.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd>Return an iterator over the database&#8217;s items (<tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs).</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.search">
+<tt class="descname">search</tt><big>(</big><em>expr</em><span class="optional">[</span>, <em>mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search a database, return a frozenset of keys whose value match the
+expressed condition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>expr</em> &#8211; case insensitive expression.</li>
+<li><em>mode</em> &#8211; mode, see <a class="reference internal" href="#jdb-search-modes"><em>JDB.search() modes</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conditions can be expressed in two ways:</p>
+<ul class="simple">
+<li>When <em>mode</em> is given, it must be one of <a class="reference internal" href="#jdb-search-modes"><em>JDB.search() modes</em></a>.</li>
+<li>If <em>mode</em> is omitted or specified as a negative value, <em>expr</em> can then
+be used to express more complex conditions using
+<a class="reference internal" href="#jdb-search-compound-expression"><em>JDB.search() mini language</em></a>.</li>
+</ul>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">&#8216;Compound Expression of Search&#8217; at <a class="reference external" href="http://fallabs.com/tokyodystopia/spex.html#laputaapi">Tokyo Dystopia documentation</a>.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.dystopia.JDB.optimize">
+<tt class="descname">optimize</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.dystopia.JDB.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize a database.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Optimizing a read only database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.dystopia.JDB.path">
+<tt class="descname">path</tt><a class="headerlink" href="#tokyo.dystopia.JDB.path" title="Permalink to this definition">¶</a></dt>
+<dd>The path to the database directory.</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.dystopia.JDB.size">
+<tt class="descname">size</tt><a class="headerlink" href="#tokyo.dystopia.JDB.size" title="Permalink to this definition">¶</a></dt>
+<dd>The size in bytes of the database.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="jdb-open-modes">
+<span id="id2"></span><h2><a title="tokyo.dystopia.JDB.open" class="reference internal" href="#tokyo.dystopia.JDB.open"><tt class="xref docutils literal"><span class="pre">JDB.open()</span></tt></a> modes<a class="headerlink" href="#jdb-open-modes" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="tokyo.dystopia.JDBOREADER">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBOREADER</tt><a class="headerlink" href="#tokyo.dystopia.JDBOREADER" title="Permalink to this definition">¶</a></dt>
+<dd>Open a database in read-only mode.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.dystopia.JDBOWRITER">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBOWRITER</tt><a class="headerlink" href="#tokyo.dystopia.JDBOWRITER" title="Permalink to this definition">¶</a></dt>
+<dd>Open a database in read-write mode.</dd></dl>
+
+<p>The following constants can only be combined with <a title="tokyo.dystopia.JDBOWRITER" class="reference internal" href="#tokyo.dystopia.JDBOWRITER"><tt class="xref docutils literal"><span class="pre">JDBOWRITER</span></tt></a> :</p>
+<ul>
+<li><dl class="data">
+<dt id="tokyo.dystopia.JDBOCREAT">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBOCREAT</tt><a class="headerlink" href="#tokyo.dystopia.JDBOCREAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new database file if it does not exists.</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.dystopia.JDBOTRUNC">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBOTRUNC</tt><a class="headerlink" href="#tokyo.dystopia.JDBOTRUNC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new database file even if one already exists (truncates existing
+file).</p>
+</dd></dl>
+
+</li>
+</ul>
+<p>The following constants can be combined with either <a title="tokyo.dystopia.JDBOREADER" class="reference internal" href="#tokyo.dystopia.JDBOREADER"><tt class="xref docutils literal"><span class="pre">JDBOREADER</span></tt></a> or
+<a title="tokyo.dystopia.JDBOWRITER" class="reference internal" href="#tokyo.dystopia.JDBOWRITER"><tt class="xref docutils literal"><span class="pre">JDBOWRITER</span></tt></a> :</p>
+<ul>
+<li><dl class="data">
+<dt id="tokyo.dystopia.JDBONOLCK">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBONOLCK</tt><a class="headerlink" href="#tokyo.dystopia.JDBONOLCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the database file without file locking.</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.dystopia.JDBOLCKNB">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBOLCKNB</tt><a class="headerlink" href="#tokyo.dystopia.JDBOLCKNB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locking is performed without blocking.</p>
+</dd></dl>
+
+</li>
+</ul>
+</div>
+<div class="section" id="jdb-tune-options">
+<span id="id3"></span><h2><a title="tokyo.dystopia.JDB.tune" class="reference internal" href="#tokyo.dystopia.JDB.tune"><tt class="xref docutils literal"><span class="pre">JDB.tune()</span></tt></a> options<a class="headerlink" href="#jdb-tune-options" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="tokyo.dystopia.JDBTLARGE">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBTLARGE</tt><a class="headerlink" href="#tokyo.dystopia.JDBTLARGE" title="Permalink to this definition">¶</a></dt>
+<dd>The size of the database can be larger than 2GB.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.dystopia.JDBTDEFLATE">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBTDEFLATE</tt><a class="headerlink" href="#tokyo.dystopia.JDBTDEFLATE" title="Permalink to this definition">¶</a></dt>
+<dd>Each page is compressed with Deflate encoding.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.dystopia.JDBTBZIP">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBTBZIP</tt><a class="headerlink" href="#tokyo.dystopia.JDBTBZIP" title="Permalink to this definition">¶</a></dt>
+<dd>Each page is compressed with BZIP2 encoding.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.dystopia.JDBTTCBS">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBTTCBS</tt><a class="headerlink" href="#tokyo.dystopia.JDBTTCBS" title="Permalink to this definition">¶</a></dt>
+<dd>Each page is compressed with TCBS encoding.</dd></dl>
+
+</div>
+<div class="section" id="jdb-search-modes">
+<span id="id4"></span><h2><a title="tokyo.dystopia.JDB.search" class="reference internal" href="#tokyo.dystopia.JDB.search"><tt class="xref docutils literal"><span class="pre">JDB.search()</span></tt></a> modes<a class="headerlink" href="#jdb-search-modes" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="tokyo.dystopia.JDBSSUBSTR">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBSSUBSTR</tt><a class="headerlink" href="#tokyo.dystopia.JDBSSUBSTR" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><pre>expr in v for v in value</pre>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.dystopia.JDBSPREFIX">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBSPREFIX</tt><a class="headerlink" href="#tokyo.dystopia.JDBSPREFIX" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><pre>v.startswith(expr) for v in value</pre>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.dystopia.JDBSSUFFIX">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBSSUFFIX</tt><a class="headerlink" href="#tokyo.dystopia.JDBSSUFFIX" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><pre>v.endswith(expr) for v in value</pre>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.dystopia.JDBSFULL">
+<tt class="descclassname">tokyo.dystopia.</tt><tt class="descname">JDBSFULL</tt><a class="headerlink" href="#tokyo.dystopia.JDBSFULL" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="n">expr</span> <span class="ow">in</span> <span class="n">value</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="jdb-search-mini-language">
+<span id="jdb-search-compound-expression"></span><h2><a title="tokyo.dystopia.JDB.search" class="reference internal" href="#tokyo.dystopia.JDB.search"><tt class="xref docutils literal"><span class="pre">JDB.search()</span></tt></a> mini language<a class="headerlink" href="#jdb-search-mini-language" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head"><em>expr</em></th>
+<th class="head">meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">'expr'</span></tt></td>
+<td><div class="first last highlight-python"><div class="highlight"><pre><span class="n">expr</span> <span class="ow">in</span> <span class="n">value</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'expr1</span> <span class="pre">expr2'</span></tt></td>
+<td><div class="first last highlight-python"><div class="highlight"><pre><span class="n">expr1</span> <span class="ow">in</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">expr2</span> <span class="ow">in</span> <span class="n">value</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'&quot;expr1</span> <span class="pre">expr2&quot;'</span></tt></td>
+<td><div class="first last highlight-python"><div class="highlight"><pre><span class="s">&quot;expr1 expr2&quot;</span> <span class="ow">in</span> <span class="n">value</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'[[*expr*]]'</span></tt></td>
+<td><div class="first last highlight-python"><pre>expr in v for v in value</pre>
+</div>
+</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'[[expr*]]'</span></tt></td>
+<td><div class="first last highlight-python"><pre>v.startswith(expr) for v in value</pre>
+</div>
+</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'[[*expr]]'</span></tt></td>
+<td><div class="first last highlight-python"><pre>v.endswith(expr) for v in value</pre>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The expressions above can be combined with <tt class="docutils literal"><span class="pre">||</span></tt> and/or <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt> (<tt class="docutils literal"><span class="pre">||</span></tt> has a
+higher order of precedence).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Tagged Database &#8212; <tt class="docutils literal"><span class="pre">JDB</span></tt></a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">JDB</span></tt></a></li>
+<li><a class="reference external" href="#jdb-open-modes"><tt class="docutils literal"><span class="pre">JDB.open()</span></tt> modes</a></li>
+<li><a class="reference external" href="#jdb-tune-options"><tt class="docutils literal"><span class="pre">JDB.tune()</span></tt> options</a></li>
+<li><a class="reference external" href="#jdb-search-modes"><tt class="docutils literal"><span class="pre">JDB.search()</span></tt> modes</a></li>
+<li><a class="reference external" href="#jdb-search-mini-language"><tt class="docutils literal"><span class="pre">JDB.search()</span></tt> mini language</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IDB.html"
+                                  title="previous chapter">Indexed Database &#8212; <tt class="docutils literal docutils literal"><span class="pre">IDB</span></tt></a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="changes.html"
+                                  title="next chapter">Todo</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/JDB.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="changes.html" title="Todo"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="IDB.html" title="Indexed Database — IDB"
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="dystopia.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">tokyo.dystopia</span></tt> &#8212; Python Tokyo Dystopia interface.</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

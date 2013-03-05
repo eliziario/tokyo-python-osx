@@ -1,0 +1,585 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Remote Table Database — RTDB &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="up" title="tokyo.tyrant — Python Tokyo Tyrant interface." href="tyrant.html" />
+    <link rel="next" title="tokyo.dystopia — Python Tokyo Dystopia interface." href="dystopia.html" />
+    <link rel="prev" title="Remote Database — RDB" href="RDB.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="dystopia.html" title="tokyo.dystopia — Python Tokyo Dystopia interface."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="RDB.html" title="Remote Database — RDB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="tyrant.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal"><span class="pre">tokyo.tyrant</span></tt> &#8212; Python Tokyo Tyrant interface.</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="remote-table-database-rtdb">
+<span id="rtdb"></span><h1>Remote Table Database &#8212; <a title="tokyo.tyrant.RTDB" class="reference internal" href="#tokyo.tyrant.RTDB"><tt class="xref docutils literal"><span class="pre">RTDB</span></tt></a><a class="headerlink" href="#remote-table-database-rtdb" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a title="tokyo.tyrant.RTDB" class="reference internal" href="#tokyo.tyrant.RTDB"><tt class="xref docutils literal"><span class="pre">RTDB</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tokyo.tyrant.RTDB">
+<em class="property">class </em><tt class="descclassname">tokyo.tyrant.</tt><tt class="descname">RTDB</tt><a class="headerlink" href="#tokyo.tyrant.RTDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># First you need to start a ttserver, example command (starting a</span>
+<span class="c"># server on default address localhost:1978): ttserver test.tct</span>
+<span class="c"># see http://fallabs.com/tokyotyrant/spex.html#serverprog and</span>
+<span class="c"># http://fallabs.com/tokyotyrant/spex.html#tutorial for more info</span>
+<span class="c"># about ttserver</span>
+
+<span class="kn">from</span> <span class="nn">tokyo.tyrant</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">rtdb</span> <span class="o">=</span> <span class="n">RTDB</span><span class="p">()</span>
+
+<span class="c"># if need be, you should call tune before open, ex. with default values:</span>
+<span class="n">rtdb</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c"># open the database</span>
+<span class="n">rtdb</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="c"># this will open the server at localhost:1978</span>
+
+<span class="c"># store records</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span>
+                   <span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="s">&quot;30&quot;</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;John&quot;</span><span class="p">,</span> <span class="s">&quot;sex&quot;</span><span class="p">:</span> <span class="s">&quot;m&quot;</span><span class="p">}),</span>
+                   <span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="s">&quot;56&quot;</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Paul&quot;</span><span class="p">,</span> <span class="s">&quot;sex&quot;</span><span class="p">:</span> <span class="s">&quot;m&quot;</span><span class="p">}),</span>
+                   <span class="p">(</span><span class="s">&quot;baz&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;age&quot;</span><span class="p">:</span> <span class="s">&quot;22&quot;</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Ella&quot;</span><span class="p">,</span> <span class="s">&quot;sex&quot;</span><span class="p">:</span> <span class="s">&quot;f&quot;</span><span class="p">})</span>
+                  <span class="p">]:</span>
+    <span class="n">rtdb</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="c"># retrieve one record</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rtdb</span><span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">])</span>
+
+<span class="c"># traverse records</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">rtdb</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">rtdb</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+<span class="c"># close the database</span>
+<span class="n">rtdb</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This client works only with Tokyo Tyrant daemon serving table databases.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For all methods taking either a <em>key</em> argument or a pair <em>(key, value)</em>,
+<em>key</em> must be either <tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2) or <tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3)
+and <em>value</em> must be a <tt class="xref docutils literal"><span class="pre">dict</span></tt>.</p>
+<p class="last">All items in <em>value</em> must be pairs of <tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2) or
+<tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3). Empty keys in <em>value</em> <strong>are not allowed</strong>.</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://fallabs.com/tokyotyrant/spex.html#tcrdbapi_apitbl">API of the Table Extension</a></p>
+</div>
+<dl class="describe">
+<dt>
+<tt class="descname">len(rtdb)</tt></dt>
+<dd>Return the number of records in the database <em>rtdb</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">rtdb[key]</tt></dt>
+<dd>Return the value of <em>rtdb</em>&#8216;s record corresponding to <em>key</em>. Raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">rtdb[key] = value</tt></dt>
+<dd>Set <tt class="docutils literal"><span class="pre">rtdb[key]</span></tt> to <em>value</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">del rtdb[key]</tt></dt>
+<dd>Remove <tt class="docutils literal"><span class="pre">rtdb[key]</span></tt> from <em>rtdb</em>.  Raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not
+in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key in rtdb</tt></dt>
+<dd>Return <tt class="xref docutils literal"><span class="pre">True</span></tt> if <em>rtdb</em> has a key <em>key</em>, else <tt class="xref docutils literal"><span class="pre">False</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key not in rtdb</tt></dt>
+<dd>Equivalent to <tt class="docutils literal"><span class="pre">not</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">rtdb</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">iter(rtdb)</tt></dt>
+<dd>Return an iterator over the keys of the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.tune">
+<tt class="descname">tune</tt><big>(</big><em>timeout</em>, <em>opts</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.tune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tune a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>timeout</em> &#8211; timeout in seconds. If specified as 0 or as a negative
+value, no timeout is applied.</li>
+<li><em>opts</em> &#8211; options, see <a class="reference external" href="RDB.html#rdb-tune-options"><em>RDB.tune() options</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Tuning an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.open">
+<tt class="descname">open</tt><big>(</big><span class="optional">[</span><em>host='localhost'</em><span class="optional">[</span>, <em>port=1978</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>host</em> &#8211; name/address of the server (defaults to <tt class="docutils literal"><span class="pre">'localhost'</span></tt>).</li>
+<li><em>port</em> &#8211; port number (defaults to <tt class="docutils literal"><span class="pre">1978</span></tt>).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the database.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">RTDBs are closed when garbage-collected.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Remove all records from the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.copy">
+<tt class="descname">copy</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the database file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>path</em> &#8211; path to the destination file. This path refers to the
+server, not the client, the database is <strong>not</strong> copied locally.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.get" title="Permalink to this definition">¶</a></dt>
+<dd>Return the value corresponding to <em>key</em>. Equivalent to <tt class="docutils literal"><span class="pre">rtdb[key]</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.remove">
+<tt class="descname">remove</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.remove" title="Permalink to this definition">¶</a></dt>
+<dd>Delete a record from the database. Equivalent to <tt class="docutils literal"><span class="pre">del</span> <span class="pre">rtdb[key]</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.put">
+<tt class="descname">put</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.put" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database. Equivalent to <tt class="docutils literal"><span class="pre">rtdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.putkeep">
+<tt class="descname">putkeep</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.putkeep" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database, unlike the standard forms
+(<tt class="docutils literal"><span class="pre">rtdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt> or <a title="tokyo.tyrant.RTDB.put" class="reference internal" href="#tokyo.tyrant.RTDB.put"><tt class="xref docutils literal"><span class="pre">put()</span></tt></a>), this method raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is already in the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.putcat">
+<tt class="descname">putcat</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.putcat" title="Permalink to this definition">¶</a></dt>
+<dd>Merge a value with an existing one, <strong>does not override existing items</strong>
+in current value. If there is no corresponding record, a new record is
+stored.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.sync">
+<tt class="descname">sync</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.sync" title="Permalink to this definition">¶</a></dt>
+<dd>Flush modifications to the database file.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s keys.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s values.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s items (<tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs).</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.itervalueskeys">
+<tt class="descname">itervalueskeys</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.itervalueskeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s values&#8217; keys.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.itervaluesvals">
+<tt class="descname">itervaluesvals</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.itervaluesvals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s values&#8217; values.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.searchkeys">
+<tt class="descname">searchkeys</tt><big>(</big><em>prefix</em><span class="optional">[</span>, <em>max</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.searchkeys" title="Permalink to this definition">¶</a></dt>
+<dd>Return a frozenset of keys starting with <em>prefix</em>. If given, <em>max</em> is
+the maximum number of keys to fetch, if omitted or specified as a
+negative value no limit is applied.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.restore">
+<tt class="descname">restore</tt><big>(</big><em>path</em>, <em>timestamp</em>, <em>opts</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore a database from an update log.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>path</em> &#8211; path to the update log directory (relative to server).</li>
+<li><em>timestamp</em> &#8211; restore from <em>timestamp</em> (in microseconds).</li>
+<li><em>opts</em> &#8211; options, see <a class="reference external" href="RDB.html#rdb-restore-setmaster-options"><em>RDB.restore()/RDB.setmaster() options</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.setmaster">
+<tt class="descname">setmaster</tt><big>(</big><em>host</em>, <em>port</em>, <em>timestamp</em>, <em>opts</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.setmaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the replication master of a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>host</em> &#8211; name/address of the master server.</li>
+<li><em>port</em> &#8211; port number of the master server.</li>
+<li><em>timestamp</em> &#8211; start replication from <em>timestamp</em> (in microseconds).</li>
+<li><em>opts</em> &#8211; options, see <a class="reference external" href="RDB.html#rdb-restore-setmaster-options"><em>RDB.restore()/RDB.setmaster() options</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.setindex">
+<tt class="descname">setindex</tt><big>(</big><em>column</em>, <em>type</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.setindex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an index to a column.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>column</em> (<tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2)/<tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3)) &#8211; name of the column. An empty string means <em>key</em>.</li>
+<li><em>type</em> &#8211; index type, see <a class="reference external" href="TDB.html#tdb-setindex-types"><em>TDB.setindex() types</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.uid">
+<tt class="descname">uid</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.uid" title="Permalink to this definition">¶</a></dt>
+<dd>Return a new unique id.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.query">
+<tt class="descname">query</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.query" title="Permalink to this definition">¶</a></dt>
+<dd>Return a query object (<a title="tokyo.tyrant.RTDBQuery" class="reference internal" href="#tokyo.tyrant.RTDBQuery"><tt class="xref docutils literal"><span class="pre">RTDBQuery</span></tt></a>). See <a class="reference internal" href="#querying-a-remote-table-database-rtdbquery">Querying a Remote Table
+Database &#8212; RTDBQuery</a>.</dd></dl>
+
+<dl class="staticmethod">
+<dt id="tokyo.tyrant.RTDB.metasearch">
+<em class="property">static </em><tt class="descname">metasearch</tt><big>(</big><em>queries</em>, <em>type</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.metasearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine queries and return the result set as a tuple of keys.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>queries</em> &#8211; a sequence of <a title="tokyo.tyrant.RTDBQuery" class="reference internal" href="#tokyo.tyrant.RTDBQuery"><tt class="xref docutils literal"><span class="pre">RTDBQuery</span></tt></a>.</li>
+<li><em>type</em> &#8211; type of combination, see <a class="reference external" href="TDB.html#tdb-metasearch-types"><em>TDB.metasearch() types</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDB.optimize">
+<tt class="descname">optimize</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDB.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize a database. This method only accepts keyword arguments. Each
+argument must be a <tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2) or <tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3)
+representation of its real value. See <a title="tokyo.cabinet.TDB.optimize" class="reference external" href="TDB.html#tokyo.cabinet.TDB.optimize"><tt class="xref docutils literal"><span class="pre">tokyo.cabinet.TDB.optimize()</span></tt></a>
+for valid arguments and values. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rtdb</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">bnum</span><span class="o">=</span><span class="s">&#39;0&#39;</span><span class="p">,</span> <span class="n">apow</span><span class="o">=</span><span class="s">&#39;-1&#39;</span><span class="p">,</span> <span class="n">fpow</span><span class="o">=</span><span class="s">&#39;-1&#39;</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="s">&#39;255&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Optimizing a read only database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.tyrant.RTDB.size">
+<tt class="descname">size</tt><a class="headerlink" href="#tokyo.tyrant.RTDB.size" title="Permalink to this definition">¶</a></dt>
+<dd>The size in bytes of the database file.</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.tyrant.RTDB.status">
+<tt class="descname">status</tt><a class="headerlink" href="#tokyo.tyrant.RTDB.status" title="Permalink to this definition">¶</a></dt>
+<dd>A <tt class="xref docutils literal"><span class="pre">dict</span></tt> of status informations about the database.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="querying-a-remote-table-database-rtdbquery">
+<h2>Querying a Remote Table Database &#8212; <a title="tokyo.tyrant.RTDBQuery" class="reference internal" href="#tokyo.tyrant.RTDBQuery"><tt class="xref docutils literal"><span class="pre">RTDBQuery</span></tt></a><a class="headerlink" href="#querying-a-remote-table-database-rtdbquery" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tokyo.tyrant.RTDBQuery">
+<em class="property">class </em><tt class="descclassname">tokyo.tyrant.</tt><tt class="descname">RTDBQuery</tt><a class="headerlink" href="#tokyo.tyrant.RTDBQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>When first returned by <a title="tokyo.tyrant.RTDB.query" class="reference internal" href="#tokyo.tyrant.RTDB.query"><tt class="xref docutils literal"><span class="pre">RTDB.query()</span></tt></a> a query result set potentially
+includes all keys contained in the database. You can narrow down a search by
+calling <a title="tokyo.tyrant.RTDBQuery.filter" class="reference internal" href="#tokyo.tyrant.RTDBQuery.filter"><tt class="xref docutils literal"><span class="pre">filter()</span></tt></a> and limit the number of results with <a title="tokyo.tyrant.RTDBQuery.limit" class="reference internal" href="#tokyo.tyrant.RTDBQuery.limit"><tt class="xref docutils literal"><span class="pre">limit()</span></tt></a>.</p>
+<dl class="method">
+<dt id="tokyo.tyrant.RTDBQuery.filter">
+<tt class="descname">filter</tt><big>(</big><em>column</em>, <em>condition</em>, <em>expr</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDBQuery.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the result set on the condition expressed by the parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>column</em> (<tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2)/<tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3)) &#8211; name of the column. An empty string means <em>key</em>.</li>
+<li><em>condition</em> &#8211; see <a class="reference external" href="TDB.html#tdbquery-filter-conditions"><em>TDBQuery.filter() conditions</em></a>.</li>
+<li><em>expr</em> (<tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2)/<tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3)) &#8211; expression.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Calling <a title="tokyo.tyrant.RTDBQuery.filter" class="reference internal" href="#tokyo.tyrant.RTDBQuery.filter"><tt class="xref docutils literal"><span class="pre">filter()</span></tt></a> multiple times with different conditions is
+equivalent to applying a logical <tt class="docutils literal"><span class="pre">AND</span></tt> between the conditions.</p>
+<p class="last">Unfortunately, due to a Tokyo Tyrant limitation, neither <em>column</em>
+nor <em>expr</em> can contain null bytes.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDBQuery.sort">
+<tt class="descname">sort</tt><big>(</big><em>column</em>, <em>type</em><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDBQuery.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the result set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>column</em> (<tt class="xref docutils literal"><span class="pre">str</span></tt> (Python2)/<tt class="xref docutils literal"><span class="pre">bytes</span></tt> (Python3)) &#8211; name of the column. An empty string means <em>key</em>.</li>
+<li><em>type</em> &#8211; sort type (and direction), see <a class="reference external" href="TDB.html#tdbquery-sort-types"><em>TDBQuery.sort() types</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Unfortunately, due to a Tokyo Tyrant limitation, <em>column</em> cannot
+contain null bytes.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDBQuery.limit">
+<tt class="descname">limit</tt><big>(</big><span class="optional">[</span><em>max</em><span class="optional">[</span>, <em>skip</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDBQuery.limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit the number of keys in the result set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>max</em> &#8211; the maximum number of keys to return. If specified as a
+negative value no limit is applied.</li>
+<li><em>skip</em> &#8211; the number of keys to skip (from the beginning). If
+specified as a 0 or as a negative value no skipping is done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDBQuery.search">
+<tt class="descname">search</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDBQuery.search" title="Permalink to this definition">¶</a></dt>
+<dd>Execute the query and return the result set as a tuple of keys.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDBQuery.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDBQuery.remove" title="Permalink to this definition">¶</a></dt>
+<dd>Remove all records corresponding to the result set from the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.tyrant.RTDBQuery.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.tyrant.RTDBQuery.count" title="Permalink to this definition">¶</a></dt>
+<dd>Return the length of the result set.</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.tyrant.RTDBQuery.hint">
+<tt class="descname">hint</tt><a class="headerlink" href="#tokyo.tyrant.RTDBQuery.hint" title="Permalink to this definition">¶</a></dt>
+<dd>TODO.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Remote Table Database &#8212; <tt class="docutils literal"><span class="pre">RTDB</span></tt></a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">RTDB</span></tt></a></li>
+<li><a class="reference external" href="#querying-a-remote-table-database-rtdbquery">Querying a Remote Table Database &#8212; <tt class="docutils literal"><span class="pre">RTDBQuery</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="RDB.html"
+                                  title="previous chapter">Remote Database &#8212; <tt class="docutils literal docutils literal"><span class="pre">RDB</span></tt></a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="dystopia.html"
+                                  title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">tokyo.dystopia</span></tt> &#8212; Python Tokyo Dystopia interface.</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/RTDB.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dystopia.html" title="tokyo.dystopia — Python Tokyo Dystopia interface."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="RDB.html" title="Remote Database — RDB"
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="tyrant.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">tokyo.tyrant</span></tt> &#8212; Python Tokyo Tyrant interface.</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

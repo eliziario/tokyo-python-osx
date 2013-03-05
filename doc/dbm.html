@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tokyo.dbm — dbm compatible interface to tokyo.cabinet. &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="next" title="tokyo.tyrant — Python Tokyo Tyrant interface." href="tyrant.html" />
+    <link rel="prev" title="Table Database — TDB" href="TDB.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tyrant.html" title="tokyo.tyrant — Python Tokyo Tyrant interface."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="TDB.html" title="Table Database — TDB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-tokyo.dbm">
+<span id="tokyo-dbm"></span><h1><tt class="xref docutils literal"><span class="pre">tokyo.dbm</span></tt> &#8212; <tt class="xref docutils literal"><span class="pre">dbm</span></tt> compatible interface to <a title="(POSIX) Python Tokyo Cabinet interface." class="reference external" href="cabinet.html#module-tokyo.cabinet"><tt class="xref docutils literal"><span class="pre">tokyo.cabinet</span></tt></a>.<a class="headerlink" href="#module-tokyo.dbm" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<p>
+<span class="versionmodified">New in version 0.5.0.</span></p>
+</blockquote>
+<p><em>Platforms: </em>POSIX</p>
+<dl class="exception">
+<dt id="tokyo.dbm.error">
+<em class="property">exception </em><tt class="descclassname">tokyo.dbm.</tt><tt class="descname">error</tt><a class="headerlink" href="#tokyo.dbm.error" title="Permalink to this definition">¶</a></dt>
+<dd>Raised when an error specific to tokyo.dbm happens.</dd></dl>
+
+<dl class="function">
+<dt id="tokyo.dbm.whichdb">
+<tt class="descclassname">tokyo.dbm.</tt><tt class="descname">whichdb</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#tokyo.dbm.whichdb" title="Permalink to this definition">¶</a></dt>
+<dd>This function attempts to guess which of the 4 database types available —
+<a title="tokyo.dbm.TCHDB" class="reference internal" href="#tokyo.dbm.TCHDB"><tt class="xref docutils literal"><span class="pre">TCHDB</span></tt></a>, <a title="tokyo.dbm.TCBDB" class="reference internal" href="#tokyo.dbm.TCBDB"><tt class="xref docutils literal"><span class="pre">TCBDB</span></tt></a>, <a title="tokyo.dbm.TCFDB" class="reference internal" href="#tokyo.dbm.TCFDB"><tt class="xref docutils literal"><span class="pre">TCFDB</span></tt></a> or <a title="tokyo.dbm.TCTDB" class="reference internal" href="#tokyo.dbm.TCTDB"><tt class="xref docutils literal"><span class="pre">TCTDB</span></tt></a> — should be
+used to open a given file. Returns the type, raises <a title="tokyo.dbm.error" class="reference internal" href="#tokyo.dbm.error"><tt class="xref docutils literal"><span class="pre">error</span></tt></a> if
+<em>filename</em> is not a Tokyo Cabinet file or if its type is unknown.</dd></dl>
+
+<dl class="function">
+<dt id="tokyo.dbm.open">
+<tt class="descclassname">tokyo.dbm.</tt><tt class="descname">open</tt><big>(</big><em>filename</em><span class="optional">[</span>, <em>flag=&quot;r&quot;</em><span class="optional">[</span>, <em>mode=0o666</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.dbm.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the database file <em>filename</em> and return a corresponding object. If the
+database file already exists, <a title="tokyo.dbm.whichdb" class="reference internal" href="#tokyo.dbm.whichdb"><tt class="xref docutils literal"><span class="pre">whichdb()</span></tt></a> is used to determine its type;
+if it does not exist, <a title="tokyo.dbm.open" class="reference internal" href="#tokyo.dbm.open"><tt class="xref docutils literal"><span class="pre">open()</span></tt></a> will try to deduce the database type from
+the <em>filename</em> extension; if this doesn&#8217;t work, <a title="tokyo.dbm.TCHDB" class="reference internal" href="#tokyo.dbm.TCHDB"><tt class="xref docutils literal"><span class="pre">TCHDB</span></tt></a> will be used.</p>
+<p>The optional <em>flag</em> argument can be:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Value</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">'r'</span></tt></td>
+<td>Open existing database for reading only
+(default)</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'w'</span></tt></td>
+<td>Open existing database for reading and
+writing</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'c'</span></tt></td>
+<td>Open database for reading and writing,
+creating it if it doesn&#8217;t exist</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">'n'</span></tt></td>
+<td>Always create a new, empty database, open
+for reading and writing</td>
+</tr>
+</tbody>
+</table>
+<p>The optional <em>mode</em> argument is the Unix mode of the file. It defaults to
+octal <tt class="docutils literal"><span class="pre">0o666</span></tt> (and will be modified by the prevailing umask).</p>
+</dd></dl>
+
+<p>The <tt class="xref docutils literal"><span class="pre">tokyo.dbm</span></tt> database types are wrappers for their corresponding
+<a title="(POSIX) Python Tokyo Cabinet interface." class="reference external" href="cabinet.html#module-tokyo.cabinet"><tt class="xref docutils literal"><span class="pre">tokyo.cabinet</span></tt></a> type. In addition to their counterparts methods and
+attributes, they  implement <tt class="xref docutils literal"><span class="pre">collections.MutableMapping</span></tt> and should
+behave, for all intents and purposes, like <tt class="xref docutils literal"><span class="pre">dict</span></tt>.</p>
+<dl class="class">
+<dt id="tokyo.dbm.TCHDB">
+<em class="property">class </em><tt class="descclassname">tokyo.dbm.</tt><tt class="descname">TCHDB</tt><a class="headerlink" href="#tokyo.dbm.TCHDB" title="Permalink to this definition">¶</a></dt>
+<dd>Wrapper for <a title="tokyo.cabinet.HDB" class="reference external" href="HDB.html#tokyo.cabinet.HDB"><tt class="xref docutils literal"><span class="pre">tokyo.cabinet.HDB</span></tt></a>.</dd></dl>
+
+<dl class="class">
+<dt id="tokyo.dbm.TCBDB">
+<em class="property">class </em><tt class="descclassname">tokyo.dbm.</tt><tt class="descname">TCBDB</tt><a class="headerlink" href="#tokyo.dbm.TCBDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for <a title="tokyo.cabinet.BDB" class="reference external" href="BDB.html#tokyo.cabinet.BDB"><tt class="xref docutils literal"><span class="pre">tokyo.cabinet.BDB</span></tt></a>.</p>
+<dl class="method">
+<dt id="tokyo.dbm.TCBDB.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><span class="optional">[</span>, <em>default=None</em><span class="optional">[</span>, <em>duplicate=False</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.dbm.TCBDB.get" title="Permalink to this definition">¶</a></dt>
+<dd>Return the value for <em>key</em> if <em>key</em> is in the database, else <em>default</em>.
+If <em>default</em> is not given, it defaults to <tt class="xref docutils literal"><span class="pre">None</span></tt>, so that this method
+never raises a <tt class="xref docutils literal"><span class="pre">KeyError</span></tt>. If <em>key</em> has duplicates and <em>duplicate</em>
+is <tt class="xref xref docutils literal"><span class="pre">False</span></tt> (default), return the value of the <strong>first record</strong>.
+If <em>duplicate</em> is <tt class="xref xref docutils literal"><span class="pre">True</span></tt> this method returns a tuple of all the
+values corresponding to <em>key</em>.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tokyo.dbm.TCFDB">
+<em class="property">class </em><tt class="descclassname">tokyo.dbm.</tt><tt class="descname">TCFDB</tt><a class="headerlink" href="#tokyo.dbm.TCFDB" title="Permalink to this definition">¶</a></dt>
+<dd>Wrapper for <a title="tokyo.cabinet.FDB" class="reference external" href="FDB.html#tokyo.cabinet.FDB"><tt class="xref docutils literal"><span class="pre">tokyo.cabinet.FDB</span></tt></a>.</dd></dl>
+
+<dl class="class">
+<dt id="tokyo.dbm.TCTDB">
+<em class="property">class </em><tt class="descclassname">tokyo.dbm.</tt><tt class="descname">TCTDB</tt><a class="headerlink" href="#tokyo.dbm.TCTDB" title="Permalink to this definition">¶</a></dt>
+<dd>Wrapper for <a title="tokyo.cabinet.TDB" class="reference external" href="TDB.html#tokyo.cabinet.TDB"><tt class="xref docutils literal"><span class="pre">tokyo.cabinet.TDB</span></tt></a>.</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="TDB.html"
+                                  title="previous chapter">Table Database &#8212; <tt class="docutils literal docutils literal docutils literal"><span class="pre">TDB</span></tt></a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tyrant.html"
+                                  title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">tokyo.tyrant</span></tt> &#8212; Python Tokyo Tyrant interface.</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/dbm.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tyrant.html" title="tokyo.tyrant — Python Tokyo Tyrant interface."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="TDB.html" title="Table Database — TDB"
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

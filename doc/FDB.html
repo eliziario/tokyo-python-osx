@@ -1,0 +1,560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fixed-length Database — FDB &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="up" title="tokyo.cabinet — Python Tokyo Cabinet interface." href="cabinet.html" />
+    <link rel="next" title="Table Database — TDB" href="TDB.html" />
+    <link rel="prev" title="On-memory Tree Database — NDB" href="NDB.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="TDB.html" title="Table Database — TDB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="NDB.html" title="On-memory Tree Database — NDB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="cabinet.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fixed-length-database-fdb">
+<span id="fdb"></span><h1>Fixed-length Database &#8212; <a title="tokyo.cabinet.FDB" class="reference internal" href="#tokyo.cabinet.FDB"><tt class="xref docutils literal"><span class="pre">FDB</span></tt></a><a class="headerlink" href="#fixed-length-database-fdb" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<p>
+<span class="versionmodified">New in version 0.3.0.</span></p>
+</blockquote>
+<div class="section" id="id1">
+<h2><a title="tokyo.cabinet.FDB" class="reference internal" href="#tokyo.cabinet.FDB"><tt class="xref docutils literal"><span class="pre">FDB</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tokyo.cabinet.FDB">
+<em class="property">class </em><tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDB</tt><a class="headerlink" href="#tokyo.cabinet.FDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">tokyo.cabinet</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">fdb</span> <span class="o">=</span> <span class="n">FDB</span><span class="p">()</span>
+
+<span class="c"># if need be, you should call tune before open, ex. with default values:</span>
+<span class="n">fdb</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c"># open the database</span>
+<span class="n">fdb</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;casket.tcf&quot;</span><span class="p">,</span> <span class="n">FDBOWRITER</span> <span class="o">|</span> <span class="n">FDBOCREAT</span><span class="p">)</span>
+
+<span class="c"># store records</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;hop&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;step&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;jump&quot;</span><span class="p">)]:</span>
+    <span class="n">fdb</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="c"># retrieve one record</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fdb</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c"># traverse records</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">fdb</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">fdb</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+<span class="c"># close the database</span>
+<span class="n">fdb</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For all methods taking either a <em>key</em> argument or a pair <em>(key, value)</em>:</p>
+<ul class="simple">
+<li>Python2: <em>key</em> must be <tt class="xref docutils literal"><span class="pre">long</span></tt>/<tt class="xref docutils literal"><span class="pre">int</span></tt> and <em>value</em> must be
+<tt class="xref docutils literal"><span class="pre">str</span></tt>.</li>
+<li>Python3: <em>key</em> must be <tt class="xref docutils literal"><span class="pre">int</span></tt> and <em>value</em> must be <tt class="xref docutils literal"><span class="pre">bytes</span></tt>.</li>
+</ul>
+<p class="last">On top of that <em>key</em> <strong>must always be &gt; 0</strong>. See <a class="reference internal" href="#fdb-special-keys"><em>Special keys</em></a>
+for exceptions to this rule.</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://fallabs.com/tokyocabinet/spex-en.html#tcfdbapi">The Fixed-length Database API</a></p>
+</div>
+<dl class="describe">
+<dt>
+<tt class="descname">len(fdb)</tt></dt>
+<dd>Return the number of records in the database <em>fdb</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">fdb[key]</tt></dt>
+<dd>Return the value of <em>fdb</em>&#8216;s record corresponding to <em>key</em>. Raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">fdb[key] = value</tt></dt>
+<dd>Set <tt class="docutils literal"><span class="pre">fdb[key]</span></tt> to <em>value</em>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">del fdb[key]</tt></dt>
+<dd>Remove <tt class="docutils literal"><span class="pre">fdb[key]</span></tt> from <em>fdb</em>.  Raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is not
+in the database.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key in fdb</tt></dt>
+<dd>Return <tt class="xref docutils literal"><span class="pre">True</span></tt> if <em>fdb</em> has a key <em>key</em>, else <tt class="xref docutils literal"><span class="pre">False</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">key not in fdb</tt></dt>
+<dd>Equivalent to <tt class="docutils literal"><span class="pre">not</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">fdb</span></tt>.</dd></dl>
+
+<dl class="describe">
+<dt>
+<tt class="descname">iter(fdb)</tt></dt>
+<dd>Return an iterator over the keys of the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.tune">
+<tt class="descname">tune</tt><big>(</big><em>width</em>, <em>size</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.tune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tune a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>width</em> &#8211; the max lenght (in bytes) of the value of each record.
+Values longer than this parameter will be truncated. If specified as
+0 or as a negative value, the default value (255) is used.</li>
+<li><em>size</em> &#8211; the max size (in bytes) of the database file. It will be
+aligned to the system page size. If specified as 0 or as a negative
+value, the default value (268435456) is used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>See <a class="reference internal" href="#fdb-tune-optimize-note"><em>Note on tuning/optimizing a fixed-length database</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Tuning an open database is an invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.open">
+<tt class="descname">open</tt><big>(</big><em>path</em>, <em>mode</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>path</em> &#8211; path to the database file.</li>
+<li><em>mode</em> &#8211; mode, see <a class="reference internal" href="#fdb-open-modes"><em>FDB.open() modes</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the database.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">FDBs are closed when garbage-collected.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Remove all records from the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.copy">
+<tt class="descname">copy</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the database file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>path</em> &#8211; path to the destination file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.begin">
+<tt class="descname">begin</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.begin" title="Permalink to this definition">¶</a></dt>
+<dd>Begin a transaction.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.commit">
+<tt class="descname">commit</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.commit" title="Permalink to this definition">¶</a></dt>
+<dd>Commit a transaction.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.abort">
+<tt class="descname">abort</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.abort" title="Permalink to this definition">¶</a></dt>
+<dd>Abort a transaction.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.get" title="Permalink to this definition">¶</a></dt>
+<dd>Return the value corresponding to <em>key</em>. Equivalent to <tt class="docutils literal"><span class="pre">fdb[key]</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.remove">
+<tt class="descname">remove</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.remove" title="Permalink to this definition">¶</a></dt>
+<dd>Delete a record from the database. Equivalent to <tt class="docutils literal"><span class="pre">del</span> <span class="pre">fdb[key]</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.put">
+<tt class="descname">put</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.put" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database. Equivalent to <tt class="docutils literal"><span class="pre">fdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.putkeep">
+<tt class="descname">putkeep</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.putkeep" title="Permalink to this definition">¶</a></dt>
+<dd>Store a record in the database, unlike the standard forms
+(<tt class="docutils literal"><span class="pre">fdb[key]</span> <span class="pre">=</span> <span class="pre">value</span></tt> or <a title="tokyo.cabinet.FDB.put" class="reference internal" href="#tokyo.cabinet.FDB.put"><tt class="xref docutils literal"><span class="pre">put()</span></tt></a>), this method raises
+<tt class="xref docutils literal"><span class="pre">KeyError</span></tt> if <em>key</em> is already in the database.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.putcat">
+<tt class="descname">putcat</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.putcat" title="Permalink to this definition">¶</a></dt>
+<dd>Concatenate a value at the end of an existing one. If there is no
+corresponding record, a new record is stored.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.addint">
+<tt class="descname">addint</tt><big>(</big><em>key</em>, <em>num</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.addint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store an <tt class="xref docutils literal"><span class="pre">int</span></tt> in the database. If <em>key</em> is not in the database,
+this method stores <em>num</em> in the database and returns it. If <em>key</em> is
+already in the database, then it will add <em>num</em> to its current value and
+return the result. If <em>key</em> exists but its value cannot be treated as an
+<tt class="xref docutils literal"><span class="pre">int</span></tt> this method raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last">
+<li><p class="first">The returned value will wrap around <a title="tokyo.cabinet.INT_MAX" class="reference external" href="cabinet.html#tokyo.cabinet.INT_MAX"><tt class="xref docutils literal"><span class="pre">INT_MAX</span></tt></a> and
+<a title="tokyo.cabinet.INT_MIN" class="reference external" href="cabinet.html#tokyo.cabinet.INT_MIN"><tt class="xref docutils literal"><span class="pre">INT_MIN</span></tt></a>. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fdb</span><span class="o">.</span><span class="n">addint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">)</span> <span class="c"># setting key 100 to INT_MAX</span>
+<span class="go">2147483647</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fdb</span><span class="o">.</span><span class="n">addint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># adding 1 to key 100 returns INT_MIN</span>
+<span class="go">-2147483648</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Trying to access a value set with <a title="tokyo.cabinet.FDB.addint" class="reference internal" href="#tokyo.cabinet.FDB.addint"><tt class="xref docutils literal"><span class="pre">addint()</span></tt></a> using <a title="tokyo.cabinet.FDB.get" class="reference internal" href="#tokyo.cabinet.FDB.get"><tt class="xref docutils literal"><span class="pre">get()</span></tt></a>
+or <tt class="docutils literal"><span class="pre">fdb[key]</span></tt> will <strong>not</strong> return an <tt class="xref docutils literal"><span class="pre">int</span></tt>. It will
+instead return the internal binary representation of the value.
+Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fdb</span><span class="o">.</span><span class="n">addint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">)</span> <span class="c"># setting key 100 to INT_MAX</span>
+<span class="go">2147483647</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fdb</span><span class="p">[</span><span class="mi">100</span><span class="p">]</span>
+<span class="go">&#39;\xff\xff\xff\x7f&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>
+<span class="versionmodified">New in version 0.5.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.adddouble">
+<tt class="descname">adddouble</tt><big>(</big><em>key</em>, <em>num</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.adddouble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store a <tt class="xref docutils literal"><span class="pre">float</span></tt> in the database. If <em>key</em> is not in the database,
+this method stores <em>num</em> in the database and returns it. If <em>key</em> is
+already in the database, then it will add <em>num</em> to its current value and
+return the result. If <em>key</em> exists but its value cannot be treated as a
+<tt class="xref docutils literal"><span class="pre">float</span></tt> this method raises <tt class="xref docutils literal"><span class="pre">KeyError</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Trying to access a value set with <a title="tokyo.cabinet.FDB.adddouble" class="reference internal" href="#tokyo.cabinet.FDB.adddouble"><tt class="xref docutils literal"><span class="pre">adddouble()</span></tt></a> using
+<a title="tokyo.cabinet.FDB.get" class="reference internal" href="#tokyo.cabinet.FDB.get"><tt class="xref docutils literal"><span class="pre">get()</span></tt></a> or <tt class="docutils literal"><span class="pre">fdb[key]</span></tt> will <strong>not</strong> return a <tt class="xref docutils literal"><span class="pre">float</span></tt>.</p>
+</div>
+<p>
+<span class="versionmodified">New in version 0.5.0.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.sync">
+<tt class="descname">sync</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.sync" title="Permalink to this definition">¶</a></dt>
+<dd>Flush modifications to the database file.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s keys.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s values.</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over the database&#8217;s items (<tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs).</p>
+<p>
+<span class="versionmodified">New in version 0.6.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.range">
+<tt class="descname">range</tt><big>(</big><span class="optional">[</span><em>lower=FDBIDMIN</em><span class="optional">[</span>, <em>upper=FDBIDMAX</em><span class="optional">[</span>, <em>max=-1</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.range" title="Permalink to this definition">¶</a></dt>
+<dd>Return a frozenset of keys. If given, <em>max</em> is the maximum number of
+keys to fetch, if omitted or specified as a negative value no limit is
+applied.</dd></dl>
+
+<dl class="method">
+<dt id="tokyo.cabinet.FDB.optimize">
+<tt class="descname">optimize</tt><big>(</big><span class="optional">[</span><em>width=0</em><span class="optional">[</span>, <em>size=0</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDB.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>width</em> &#8211; the max lenght (in bytes) of the value of each record.
+Values longer than this parameter will be truncated. If specified as
+0 or as a negative value, the current setting is kept.</li>
+<li><em>size</em> &#8211; the max size (in bytes) of the database file. It will be
+aligned to the system page size. If specified as 0 or as a negative
+value, the current setting is kept.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>See <a class="reference internal" href="#fdb-tune-optimize-note"><em>Note on tuning/optimizing a fixed-length database</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Optimizing a read only database, or during a transaction, is an
+invalid operation.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.cabinet.FDB.path">
+<tt class="descname">path</tt><a class="headerlink" href="#tokyo.cabinet.FDB.path" title="Permalink to this definition">¶</a></dt>
+<dd>The path to the database file.</dd></dl>
+
+<dl class="attribute">
+<dt id="tokyo.cabinet.FDB.size">
+<tt class="descname">size</tt><a class="headerlink" href="#tokyo.cabinet.FDB.size" title="Permalink to this definition">¶</a></dt>
+<dd>The size in bytes of the database file.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="note-on-tuning-optimizing-a-fixed-length-database">
+<span id="fdb-tune-optimize-note"></span><h2>Note on tuning/optimizing a fixed-length database<a class="headerlink" href="#note-on-tuning-optimizing-a-fixed-length-database" title="Permalink to this headline">¶</a></h2>
+<p>The maximum length (and highest possible key) of a database is in direct
+relation to the <em>width</em> and <em>size</em> parameters and can be determined using the
+following function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">PAGESIZE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sysconf</span><span class="p">(</span><span class="s">&quot;SC_PAGESIZE&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fdb_max_len</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">size</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">PAGESIZE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c"># align to page size</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">size</span> <span class="o">+</span> <span class="n">PAGESIZE</span> <span class="o">-</span> <span class="n">diff</span>
+    <span class="c"># 256 is the database header size</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">((</span><span class="n">size</span> <span class="o">-</span> <span class="mi">256</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fdb-open-modes">
+<span id="id2"></span><h2><a title="tokyo.cabinet.FDB.open" class="reference internal" href="#tokyo.cabinet.FDB.open"><tt class="xref docutils literal"><span class="pre">FDB.open()</span></tt></a> modes<a class="headerlink" href="#fdb-open-modes" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="tokyo.cabinet.FDBOREADER">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBOREADER</tt><a class="headerlink" href="#tokyo.cabinet.FDBOREADER" title="Permalink to this definition">¶</a></dt>
+<dd>Open a database in read-only mode.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.FDBOWRITER">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBOWRITER</tt><a class="headerlink" href="#tokyo.cabinet.FDBOWRITER" title="Permalink to this definition">¶</a></dt>
+<dd>Open a database in read-write mode.</dd></dl>
+
+<p>The following constants can only be combined with <a title="tokyo.cabinet.FDBOWRITER" class="reference internal" href="#tokyo.cabinet.FDBOWRITER"><tt class="xref docutils literal"><span class="pre">FDBOWRITER</span></tt></a> :</p>
+<ul>
+<li><dl class="data">
+<dt id="tokyo.cabinet.FDBOCREAT">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBOCREAT</tt><a class="headerlink" href="#tokyo.cabinet.FDBOCREAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new database file if it does not exists.</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.cabinet.FDBOTRUNC">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBOTRUNC</tt><a class="headerlink" href="#tokyo.cabinet.FDBOTRUNC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new database file even if one already exists (truncates existing
+file).</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.cabinet.FDBOTSYNC">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBOTSYNC</tt><a class="headerlink" href="#tokyo.cabinet.FDBOTSYNC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sync the database file on every transaction.</p>
+</dd></dl>
+
+</li>
+</ul>
+<p>The following constants can be combined with either <a title="tokyo.cabinet.FDBOREADER" class="reference internal" href="#tokyo.cabinet.FDBOREADER"><tt class="xref docutils literal"><span class="pre">FDBOREADER</span></tt></a> or
+<a title="tokyo.cabinet.FDBOWRITER" class="reference internal" href="#tokyo.cabinet.FDBOWRITER"><tt class="xref docutils literal"><span class="pre">FDBOWRITER</span></tt></a> :</p>
+<ul>
+<li><dl class="data">
+<dt id="tokyo.cabinet.FDBONOLCK">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBONOLCK</tt><a class="headerlink" href="#tokyo.cabinet.FDBONOLCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the database file without file locking.</p>
+</dd></dl>
+
+</li>
+<li><dl class="data">
+<dt id="tokyo.cabinet.FDBOLCKNB">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBOLCKNB</tt><a class="headerlink" href="#tokyo.cabinet.FDBOLCKNB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locking is performed without blocking.</p>
+</dd></dl>
+
+</li>
+</ul>
+</div>
+<div class="section" id="special-keys">
+<span id="fdb-special-keys"></span><h2>Special <em>keys</em><a class="headerlink" href="#special-keys" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="tokyo.cabinet.FDBIDMIN">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBIDMIN</tt><big>(</big><em>-1</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDBIDMIN" title="Permalink to this definition">¶</a></dt>
+<dd>The lowest <em>key</em> currently in the database.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.FDBIDPREV">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBIDPREV</tt><big>(</big><em>-2</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDBIDPREV" title="Permalink to this definition">¶</a></dt>
+<dd><a title="tokyo.cabinet.FDBIDMIN" class="reference internal" href="#tokyo.cabinet.FDBIDMIN"><tt class="xref docutils literal"><span class="pre">FDBIDMIN</span></tt></a> - 1</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.FDBIDMAX">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBIDMAX</tt><big>(</big><em>-3</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDBIDMAX" title="Permalink to this definition">¶</a></dt>
+<dd>The highest <em>key</em> currently in the database.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.FDBIDNEXT">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">FDBIDNEXT</tt><big>(</big><em>-4</em><big>)</big><a class="headerlink" href="#tokyo.cabinet.FDBIDNEXT" title="Permalink to this definition">¶</a></dt>
+<dd><a title="tokyo.cabinet.FDBIDMAX" class="reference internal" href="#tokyo.cabinet.FDBIDMAX"><tt class="xref docutils literal"><span class="pre">FDBIDMAX</span></tt></a> + 1</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Fixed-length Database &#8212; <tt class="docutils literal"><span class="pre">FDB</span></tt></a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">FDB</span></tt></a></li>
+<li><a class="reference external" href="#note-on-tuning-optimizing-a-fixed-length-database">Note on tuning/optimizing a fixed-length database</a></li>
+<li><a class="reference external" href="#fdb-open-modes"><tt class="docutils literal"><span class="pre">FDB.open()</span></tt> modes</a></li>
+<li><a class="reference external" href="#special-keys">Special <em>keys</em></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="NDB.html"
+                                  title="previous chapter">On-memory Tree Database &#8212; <tt class="docutils literal docutils literal"><span class="pre">NDB</span></tt></a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="TDB.html"
+                                  title="next chapter">Table Database &#8212; <tt class="docutils literal"><span class="pre">TDB</span></tt></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/FDB.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="TDB.html" title="Table Database — TDB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="NDB.html" title="On-memory Tree Database — NDB"
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li>
+          <li><a href="cabinet.html" ><tt class="docutils literal docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

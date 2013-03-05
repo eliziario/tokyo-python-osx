@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tokyo.cabinet — Python Tokyo Cabinet interface. &mdash; tokyo-python v0.7.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="tokyo-python v0.7.0 documentation" href="index.html" />
+    <link rel="next" title="Hash Database — HDB" href="HDB.html" />
+    <link rel="prev" title="Welcome to tokyo-python’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="HDB.html" title="Hash Database — HDB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to tokyo-python’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-tokyo.cabinet">
+<span id="tokyo-cabinet"></span><h1><tt class="xref docutils literal"><span class="pre">tokyo.cabinet</span></tt> &#8212; Python Tokyo Cabinet interface.<a class="headerlink" href="#module-tokyo.cabinet" title="Permalink to this headline">¶</a></h1>
+<p><em>Platforms: </em>POSIX</p>
+<p>Tokyo Cabinet is a library of routines for managing a database. The database is
+a simple data file containing records, each is a pair of a key and a value.
+Every key and value is serial bytes with variable length. Both binary data and
+character string can be used as a key and a value. There is neither concept of
+data tables nor data types. Records are organized in hash table, B+ tree, or
+fixed-length array.
+Tokyo Cabinet is developed as the successor of GDBM and QDBM on the following
+purposes. They are achieved and Tokyo Cabinet replaces conventional DBM products.</p>
+<ul class="simple">
+<li>improves space efficiency: smaller size of database file.</li>
+<li>improves time efficiency: faster processing speed.</li>
+<li>improves parallelism: higher performance in multi-thread environment.</li>
+<li>improves usability: simplified API.</li>
+<li>improves robustness: database file is not corrupted even under catastrophic
+situation.</li>
+<li>supports 64-bit architecture: enormous memory space and database file are
+available.</li>
+</ul>
+<div class="admonition-todo admonition " id="todo-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Rewrite the previous section (copy/pasted from <a class="reference external" href="http://fallabs.com/tokyocabinet/">http://fallabs.com/tokyocabinet/</a>).</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://fallabs.com/tokyocabinet/spex-en.html">Fundamental Specifications of Tokyo Cabinet Version 1</a> for more information about
+Tokyo Cabinet.</p>
+</div>
+<dl class="exception">
+<dt id="tokyo.cabinet.Error">
+<em class="property">exception </em><tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">Error</tt><a class="headerlink" href="#tokyo.cabinet.Error" title="Permalink to this definition">¶</a></dt>
+<dd>Raised when an error specific to Tokyo Cabinet happens.</dd></dl>
+
+<dl class="function">
+<dt id="tokyo.cabinet.version">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">version</tt><big>(</big><big>)</big><a class="headerlink" href="#tokyo.cabinet.version" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the version string of the underlying Tokyo Cabinet library.</dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.INT_MAX">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">INT_MAX</tt><a class="headerlink" href="#tokyo.cabinet.INT_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="tokyo.cabinet.INT_MIN">
+<tt class="descclassname">tokyo.cabinet.</tt><tt class="descname">INT_MIN</tt><a class="headerlink" href="#tokyo.cabinet.INT_MIN" title="Permalink to this definition">¶</a></dt>
+<dd><p>The largest positive and negative integers as defined by the platform
+(mainly used for testing <tt class="xref docutils literal"><span class="pre">addint()</span></tt>).</p>
+<p>
+<span class="versionmodified">New in version 0.5.0.</span></p>
+</dd></dl>
+
+<ul>
+<li class="toctree-l1"><a class="reference external" href="HDB.html">Hash Database &#8212; <tt class="docutils literal"><span class="pre">HDB</span></tt></a></li>
+<li class="toctree-l1"><a class="reference external" href="MDB.html">On-memory Hash Database &#8212; <tt class="docutils literal"><span class="pre">MDB</span></tt></a></li>
+<li class="toctree-l1"><a class="reference external" href="BDB.html">B+ Tree Database &#8212; <tt class="docutils literal"><span class="pre">BDB</span></tt></a></li>
+<li class="toctree-l1"><a class="reference external" href="NDB.html">On-memory Tree Database &#8212; <tt class="docutils literal"><span class="pre">NDB</span></tt></a></li>
+<li class="toctree-l1"><a class="reference external" href="FDB.html">Fixed-length Database &#8212; <tt class="docutils literal"><span class="pre">FDB</span></tt></a></li>
+<li class="toctree-l1"><a class="reference external" href="TDB.html">Table Database &#8212; <tt class="docutils literal"><span class="pre">TDB</span></tt></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Welcome to tokyo-python&#8217;s documentation!</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="HDB.html"
+                                  title="next chapter">Hash Database &#8212; <tt class="docutils literal docutils literal docutils literal"><span class="pre">HDB</span></tt></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/cabinet.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="HDB.html" title="Hash Database — HDB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to tokyo-python’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">tokyo-python v0.7.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>
